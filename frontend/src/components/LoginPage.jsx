@@ -2,6 +2,7 @@ import { Container, Form, FloatingLabel, Button, Row, Col } from 'react-bootstra
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 const LoginPage = () => {
   const formik = useFormik({
@@ -14,7 +15,9 @@ const LoginPage = () => {
       password: Yup.string().required('Введите пароль'),
     }),
     onSubmit: (values) => {
-      console.log('Форма отправлена:', values);
+      axios.post('/api/v1/login', values).then((response) => {
+        console.log(response.data);
+      });
     },
   });
 
