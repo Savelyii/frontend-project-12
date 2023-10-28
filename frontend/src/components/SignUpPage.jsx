@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 
-export const SignUp = () => {
+const SignUpPage = () => {
   return (
     <>
-      <h1>Зарегаться</h1>
+      <h1>Зарегестрироваться</h1>
       <p>
         Уже есть аккаунт? <Link to="/login">Войти</Link>
       </p>
     </>
   );
 };
+
+export default SignUpPage;
