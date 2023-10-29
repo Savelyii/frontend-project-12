@@ -1,11 +1,9 @@
 import React from 'react';
 
-const MainPage = () => {
-    return (
-        <div>
-            <h1>Чат</h1>
-        </div>
-    )
-};
+const MainPage = () => (
+  <div>
+    <h1>Чат</h1>
+  </div>
+);
 
 export default MainPage;
