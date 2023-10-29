@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Container, Form, FloatingLabel, Button, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -5,6 +6,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -14,10 +16,15 @@ const LoginPage = () => {
       username: Yup.string().required('Введите ваш ник'),
       password: Yup.string().required('Введите пароль'),
     }),
-    onSubmit: (values) => {
-      axios.post('/api/v1/login', values).then((response) => {
-        console.log(response.data);
-      });
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post('/api/v1/login', values);
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        navigate('/chat');
+      } catch (error) {
+        console.log(error)
+      }
     },
   });
 
