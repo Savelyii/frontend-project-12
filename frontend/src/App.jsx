@@ -6,7 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
-import SignUpPage from './components/SignUpPage';
+// import SignUpPage from './components/SignUpPage';
 import NotFoundPage from './components/NotFoundPage';
 import ChatPage from './components/ChatPage';
 import AuthContext from './contexts/index.js';
@@ -27,26 +27,28 @@ const AuthProvider = ({ children }) => {
   };
 
   const getAuthHeader = () => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-
-    if (userData && userData.token) {
-      return { Authorization: `Bearer ${userData.token}` };
+    if (currentUser && currentUser.token) {
+      return { Authorization: `Bearer ${currentUser.token}` };
     }
     return {};
   };
 
   return (
-    <AuthContext.Provider value ={{ user, logIn, logOut, getAuthHeader }}>
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <AuthContext.Provider value={{
+      user, logIn, logOut, getAuthHeader,
+    }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-const ChatPageRoute = () => {
+const ChatPageRoute = ({ children }) => {
   const auth = useAuth();
 
   return (
-    auth.user ? <ChatPage /> : <Navigate to="/login" />
+    auth.user ? children : <Navigate to="/login" />
   );
 };
 
@@ -55,9 +57,15 @@ const App = () => (
     <BrowserRouter>
       <div className="d-flex flex-column h-100">
         <Routes>
-          <Route path="/" element={<ChatPageRoute />} />
+          <Route
+            path="/"
+            element={(
+              <ChatPageRoute>
+                <ChatPage />
+              </ChatPageRoute>
+            )}
+          />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

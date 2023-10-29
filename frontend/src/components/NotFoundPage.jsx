@@ -1,10 +1,13 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 const NotFoundPage = () => (
-  <>
-    <h1>404 (not found)</h1>
-    <Link to="/">Вернуться на главную</Link>
-  </>
+  <div className="text-center">
+    <h1 className="h4 text-muted">Страница не найдена</h1>
+    <p className="text-muted">
+      Но вы можете перейти
+      <a href="/"> на главную страницу</a>
+    </p>
+  </div>
 );
 
 export default NotFoundPage;
