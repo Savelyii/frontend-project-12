@@ -26,10 +26,8 @@ const Messages = () => {
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = channels.find((channel) => channel.id === currentChannelId);
-  console.log(currentChannel);
 
   const messages = useSelector(messagesSelectors.selectAll);
-  console.log(messages);
 
   return (
     <div className="col p-0 h-100">
