@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
@@ -16,10 +17,11 @@ const Messages = () => {
   const socket = io();
 
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannel = useSelector((state) => channelsSelectors.selectById(state, currentChannelId));
+  const currentChannel = useSelector((state) => channelsSelectors
+    .selectById(state, currentChannelId));
 
   const messages = useSelector(messagesSelectors.selectAll);
-  const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
+  const currentMessages = messages.filter((m) => m.channelId === currentChannelId);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -63,9 +65,9 @@ const Messages = () => {
       return null;
     }
     return (
-      currentMessages.map((message) => (
-        <div key={message.id} className="text-break mb-2">
-          <b>{message.username}</b>: {message.body}
+      currentMessages.map((m) => (
+        <div key={m.id} className="text-break mb-2">
+          <b>{m.username}</b>: {m.body}
         </div>
       ))
     );
