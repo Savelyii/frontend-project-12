@@ -9,6 +9,7 @@ import { selectors as messagesSelectors, actions as messagesActions } from '../s
 const Messages = () => {
   const [message, setMessage] = useState('');
   const inputRef = useRef();
+  const lastMessageRef = useRef();
   const auth = useAuth();
   const dispatch = useDispatch();
 
@@ -23,6 +24,12 @@ const Messages = () => {
   useEffect(() => {
     inputRef.current.focus();
   });
+
+  useEffect(() => {
+    lastMessageRef.current.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }, [currentMessages]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -73,6 +80,7 @@ const Messages = () => {
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
           {messagesRender()}
+          <span ref={lastMessageRef} />
         </div>
         <div className="mt-auto px-5 py-3">
           <form onSubmit={handleSubmit} noValidate="" className="py-1 border rounded-2">
