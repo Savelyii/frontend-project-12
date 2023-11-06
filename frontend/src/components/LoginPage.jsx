@@ -2,19 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import * as yup from 'yup';
 import axios from 'axios';
 import useAuth from '../hooks/index.js';
 import routes from '../routes.js';
-
-const validationSchema = Yup.object().shape({
-  username: Yup
-    .string()
-    .required('Required'),
-  password: Yup
-    .string()
-    .required('Required'),
-});
 
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
@@ -25,6 +16,17 @@ const LoginPage = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const validationSchema = yup.object().shape({
+    username: yup
+      .string()
+      .trim()
+      .required('Обязательное поле'),
+    password: yup
+      .string()
+      .trim()
+      .required('Обязательное поле'),
+  });
 
   const formik = useFormik({
     initialValues: {
