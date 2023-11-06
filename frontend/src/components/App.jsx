@@ -12,6 +12,7 @@ import NotFoundPage from './NotFoundPage.jsx';
 import ChatPage from './ChatPage.jsx';
 import AuthContext from '../contexts/index.js';
 import useAuth from '../hooks/index.js';
+import store from '../slices/index.js';
 
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('user'));
