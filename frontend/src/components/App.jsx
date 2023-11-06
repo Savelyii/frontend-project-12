@@ -5,12 +5,13 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import LoginPage from './components/LoginPage';
+import { Provider as StoreProvider } from 'react-redux';
+import LoginPage from './LoginPage.jsx';
 // import SignUpPage from './components/SignUpPage';
-import NotFoundPage from './components/NotFoundPage';
-import ChatPage from './components/ChatPage';
-import AuthContext from './contexts/index.js';
-import useAuth from './hooks/index.js';
+import NotFoundPage from './NotFoundPage.jsx';
+import ChatPage from './ChatPage.jsx';
+import AuthContext from '../contexts/index.js';
+import useAuth from '../hooks/index.js';
 
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -53,24 +54,26 @@ const ChatPageRoute = ({ children }) => {
 };
 
 const App = () => (
-  <AuthProvider>
-    <BrowserRouter>
+  <StoreProvider store={store}>
+    <AuthProvider>
       <div className="d-flex flex-column h-100">
-        <Routes>
-          <Route
-            path="/"
-            element={(
-              <ChatPageRoute>
-                <ChatPage />
-              </ChatPageRoute>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={(
+                <ChatPageRoute>
+                  <ChatPage />
+                </ChatPageRoute>
             )}
-          />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+            />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
       </div>
-    </BrowserRouter>
-  </AuthProvider>
+    </AuthProvider>
+  </StoreProvider>
 );
 
 export default App;
