@@ -9,8 +9,8 @@ import LoginPage from './LoginPage.jsx';
 // import SignUpPage from './components/SignUpPage';
 import NotFoundPage from './NotFoundPage.jsx';
 import ChatPage from './ChatPage.jsx';
-import AuthContext from '../contexts/index.js';
-import useAuth from '../hooks/index.js';
+import { AuthContext } from '../contexts/index.js';
+import { useAuth } from '../hooks/index.js';
 
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('user'));

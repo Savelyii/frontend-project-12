@@ -1,24 +1,22 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState, useRef, useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useRef, useEffect } from 'react';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
+
+import { Form, InputGroup, Button } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
-import { useSelector, useDispatch } from 'react-redux';
-import useAuth from '../hooks/index.js';
+
+import { useAuth, useSocket } from '../hooks/index.js';
+
 import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
-import { selectors as messagesSelectors, actions as messagesActions } from '../slices/messagesSlice.js';
+import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
 
 const Messages = () => {
-  const [message, setMessage] = useState('');
   const inputRef = useRef();
   const lastMessageRef = useRef();
   const auth = useAuth();
-  const dispatch = useDispatch();
-
-  const socket = io();
-
-  socket.on('newMessage', (payload) => {
-    dispatch(messagesActions.addMessage(payload));
-  });
+  const chat = useSocket();
 
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector((state) => channelsSelectors
@@ -37,28 +35,33 @@ const Messages = () => {
     });
   }, [currentMessages]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (message) {
-      const body = message;
-      const channelId = currentChannelId;
-      const { username } = auth.user;
-      const data = {
-        body,
-        channelId,
-        username,
-      };
-      socket.emit('newMessage', data, (response) => {
-        console.log(response.status);
-      });
+  const validationSchema = yup.object().shape({
+    body: yup
+      .string()
+      .trim()
+      .required(),
+  });
 
-      setMessage('');
-    }
-  };
-
-  const handleChange = (e) => {
-    setMessage(e.target.value);
-  };
+  const formik = useFormik({
+    initialValues: {
+      body: '',
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      if (values.body !== '') {
+        const { body } = values;
+        const channelId = currentChannelId;
+        const { username } = auth.user;
+        const data = {
+          body,
+          channelId,
+          username,
+        };
+        chat.addNewMessage(data);
+        formik.resetForm();
+      }
+    },
+  });
 
   const messagesRender = () => {
     if (currentMessages.length === 0) {
@@ -85,23 +88,29 @@ const Messages = () => {
           <span ref={lastMessageRef} />
         </div>
         <div className="mt-auto px-5 py-3">
-          <form onSubmit={handleSubmit} noValidate="" className="py-1 border rounded-2">
-            <div className="input-group has-validation">
-              <input
-                onChange={handleChange}
+          <Form onSubmit={formik.handleSubmit} noValidate className="py-1 border rounded-2">
+            <InputGroup>
+              <Form.Control
+                onChange={formik.handleChange}
                 name="body"
                 aria-label="Новое сообщение"
                 placeholder="Введите сообщение..."
-                className="border-0 p-0 ps-2 form-control"
-                value={message}
+                className="border-0 p-0 ps-2"
+                value={formik.values.body}
                 ref={inputRef}
+                disabled={formik.isSubmitting}
               />
-              <button type="submit" className="btn btn-group-vertical" disabled="">
+              <Button
+                type="submit"
+                variant="link"
+                className="btn-group-vertical"
+                disabled={formik.errors.body || !formik.values.body}
+              >
                 <ArrowRightSquare />
                 <span className="visually-hidden">Отправить</span>
-              </button>
-            </div>
-          </form>
+              </Button>
+            </InputGroup>
+          </Form>
         </div>
       </div>
     </div>

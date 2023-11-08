@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import useAuth from '../hooks/index.js';
+import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 
 const LoginPage = () => {
