@@ -98,6 +98,13 @@ const LoginPage = () => {
                 <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
               </Form>
             </div>
+            <div className="card-footer p-4">
+              <div className="text-center">
+                <span>Нет аккаунта?</span>
+                {' '}
+                <a href="/signup">Регистрация</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

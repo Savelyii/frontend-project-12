@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
-// import SignUpPage from './components/SignUpPage';
+import SignUpPage from './SignUpPage';
 import NotFoundPage from './NotFoundPage.jsx';
 import ChatPage from './ChatPage.jsx';
 import { AuthContext } from '../contexts/index.js';
@@ -71,6 +71,7 @@ const App = () => (
           )}
           />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
