@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
 // import SignUpPage from './components/SignUpPage';
 import NotFoundPage from './NotFoundPage.jsx';
@@ -36,7 +37,10 @@ const AuthProvider = ({ children }) => {
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <AuthContext.Provider value={{
-      user, logIn, logOut, getAuthHeader,
+      user,
+      logIn,
+      logOut,
+      getAuthHeader,
     }}
     >
       {children}
@@ -54,8 +58,9 @@ const ChatPageRoute = ({ children }) => {
 
 const App = () => (
   <AuthProvider>
-    <div className="d-flex flex-column h-100">
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className="d-flex flex-column h-100">
+        <Header />
         <Routes>
           <Route
             path="/"
@@ -68,8 +73,8 @@ const App = () => (
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   </AuthProvider>
 );
 
