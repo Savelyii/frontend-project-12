@@ -4,10 +4,8 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
-
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
-
 import image from '../assets/avatar_1.jpg';
 
 const SignUpPage = () => {

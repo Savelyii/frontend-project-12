@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
+import image from '../assets/login.jpg';
 
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
@@ -54,6 +55,13 @@ const LoginPage = () => {
         <div className="col-12 col-md-8 col-xxl-6">
           <div className="card shadow-sm">
             <div className="card-body row p-5">
+              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img
+                  src={image}
+                  className="rounded-circle"
+                  alt="Войти"
+                />
+              </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                 <h1 className="text-center mb-4">Войти</h1>
                 <Form.Group className="form-floating mb-3">
