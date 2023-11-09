@@ -41,7 +41,7 @@ const Add = (props) => {
   });
 
   return (
-    <Modal show>
+    <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>Добавить канал</Modal.Title>
       </Modal.Header>
