@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-
+import { toast } from 'react-toastify';
 import { useSocket } from '../../hooks/index.js';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
 
@@ -37,6 +37,7 @@ const Add = (props) => {
     validationSchema,
     onSubmit: (values) => {
       chat.addNewChannel(values);
+      toast.success(t('modalAdd.success'));
       onHide();
     },
   });

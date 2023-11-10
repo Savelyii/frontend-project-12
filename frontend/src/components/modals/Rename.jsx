@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-
+import { toast } from 'react-toastify';
 import { useSocket } from '../../hooks/index.js';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
 
@@ -35,6 +35,7 @@ const Rename = (props) => {
     onSubmit: (values) => {
       const { name } = values;
       chat.renameChannel(id, name);
+      toast.success(t('modalRename.success'));
       onHide();
     },
   });

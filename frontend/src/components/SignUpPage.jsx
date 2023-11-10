@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
@@ -54,11 +55,18 @@ const SignUpPage = () => {
         auth.logIn(response.data);
         navigate('/');
       } catch (err) {
-        if (err.response.status === 409) {
-          setSignUpFailed(true);
-          inputRef.current.select();
+        console.log(err);
+        if (err.isAxiosError) {
+          if (err.response.status === 409) {
+            setSignUpFailed(true);
+            inputRef.current.select();
+          } else {
+            toast.error(t('errors.network'));
+          }
+        } else {
+          toast.error(t('errors.unknown'));
+          throw err;
         }
-        throw err;
       }
     },
   });
