@@ -5,6 +5,7 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import { useSocket } from '../../hooks/index.js';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
 
@@ -33,8 +34,8 @@ const Rename = (props) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      const { name } = values;
-      chat.renameChannel(id, name);
+      const cleanedName = leoProfanity.clean(values.name);
+      chat.renameChannel({ id, name: cleanedName });
       toast.success(t('modalRename.success'));
       onHide();
     },
