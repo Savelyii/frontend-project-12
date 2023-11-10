@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 import image from '../assets/login.jpg';
@@ -13,6 +14,7 @@ const LoginPage = () => {
   const auth = useAuth();
   const inputRef = useRef();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -22,11 +24,11 @@ const LoginPage = () => {
     username: yup
       .string()
       .trim()
-      .required('Обязательное поле'),
+      .required(t('login.required')),
     password: yup
       .string()
       .trim()
-      .required('Обязательное поле'),
+      .required(t('login.required')),
   });
 
   const formik = useFormik({
@@ -59,11 +61,11 @@ const LoginPage = () => {
                 <img
                   src={image}
                   className="rounded-circle"
-                  alt="Войти"
+                  alt={t('login.header')}
                 />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('login.header')}</h1>
                 <Form.Group className="form-floating mb-3">
                   <Form.Control
                     onChange={formik.handleChange}
@@ -74,9 +76,9 @@ const LoginPage = () => {
                     isInvalid={authFailed}
                     required
                     ref={inputRef}
-                    placeholder="username"
+                    placeholder={t('login.username')}
                   />
-                  <Form.Label htmlFor="username">Ваш ник</Form.Label>
+                  <Form.Label htmlFor="username">{t('login.username')}</Form.Label>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4">
                   <Form.Control
@@ -84,25 +86,25 @@ const LoginPage = () => {
                     value={formik.values.password}
                     id="password"
                     isInvalid={authFailed}
-                    placeholder="password"
                     name="password"
                     autoComplete="current-password"
                     type="password"
                     required
+                    placeholder={t('login.password')}
                   />
-                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                  <Form.Label htmlFor="password">{t('login.password')}</Form.Label>
                   <Form.Control.Feedback type="invalid">
-                    Неверные имя пользователя или пароль
+                    {t('login.authFailed')}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                <Button type="submit" variant="outline-primary" className="w-100 mb-3">{t('login.submit')}</Button>
               </Form>
             </div>
             <div className="card-footer p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>
+                <span>{t('login.newToChat')}</span>
                 {' '}
-                <a href="/signup">Регистрация</a>
+                <a href="/signup">{t('login.signup')}</a>
               </div>
             </div>
           </div>
