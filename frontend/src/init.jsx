@@ -98,6 +98,11 @@ const rollbarConfig = {
   captureUnhandledRejections: true,
 };
 
+function TestError() {
+  const a = null;
+  return a.hello();
+}
+
 const init = async (socket) => {
   const i18n = i18next.createInstance();
 
@@ -114,6 +119,7 @@ const init = async (socket) => {
         <StoreProvider store={store}>
           <SocketProvider socket={socket}>
             <I18nextProvider i18n={i18n}>
+              <TestError />
               <App />
             </I18nextProvider>
           </SocketProvider>
