@@ -11,13 +11,13 @@ import SocketProvider from './contexts/SocketProvider.jsx';
 
 import resources from './locales/index.js';
 
-const rollbarConfig = {
-  accessToken: process.env.REACT_APP_ROLLBAR,
-  environment: 'production',
-};
-
 const init = async (socket) => {
   const i18n = i18next.createInstance();
+
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR,
+    environment: 'production',
+  };
 
   await i18n
     .use(initReactI18next)
