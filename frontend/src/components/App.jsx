@@ -21,7 +21,6 @@ const ChatPageRoute = ({ children }) => {
     auth.user ? children : <Navigate to="/login" />
   );
 };
-console.log('test');
 const App = () => (
   <AuthProvider>
     <BrowserRouter>
