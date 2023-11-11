@@ -13,6 +13,7 @@ const ru = {
       authFailed: 'Неверные имя пользователя или пароль',
       header: 'Войти',
     },
+    titleHeader: 'Hexlet Chat',
     logout: 'Выйти',
     signup: {
       required: 'Обязательное поле',
