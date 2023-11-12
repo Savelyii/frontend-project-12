@@ -43,7 +43,7 @@ const LoginPage = () => {
       try {
         const response = await axios.post(routes.loginPath(), values);
         auth.logIn(response.data);
-        navigate('/');
+        navigate(routes.home);
       } catch (err) {
         console.log(err);
         if (err.isAxiosError) {
@@ -114,7 +114,7 @@ const LoginPage = () => {
               <div className="text-center">
                 <span>{t('login.newToChat')}</span>
                 {' '}
-                <a href="/signup">{t('login.signup')}</a>
+                <a href={routes.signup}>{t('login.signup')}</a>
               </div>
             </div>
           </div>

@@ -13,12 +13,13 @@ import SignUpPage from './SignUpPage';
 import NotFoundPage from './NotFoundPage.jsx';
 import ChatPage from './ChatPage.jsx';
 import { useAuth } from '../hooks/index.js';
+import routes from '../routes.js';
 
 const ChatPageRoute = ({ children }) => {
   const auth = useAuth();
 
   return (
-    auth.user ? children : <Navigate to="/login" />
+    auth.user ? children : <Navigate to={routes.login} />
   );
 };
 const App = () => (
@@ -28,16 +29,16 @@ const App = () => (
         <Header />
         <Routes>
           <Route
-            path="/"
+            path={routes.home}
             element={(
               <ChatPageRoute>
                 <ChatPage />
               </ChatPageRoute>
           )}
           />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={routes.login} element={<LoginPage />} />
+          <Route path={routes.signup} element={<SignUpPage />} />
+          <Route path={routes.error} element={<NotFoundPage />} />
         </Routes>
       </div>
       <ToastContainer />

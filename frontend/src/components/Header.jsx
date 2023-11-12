@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Navbar, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
+import routes from '../routes.js';
 import { useAuth } from '../hooks/index.js';
 
 const Header = () => {
@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <Navbar className="shadow-sm navbar-expand-lg navbar-light bg-white">
       <Container>
-        <Navbar.Brand as={Link} to="/">{t('titleHeader')}</Navbar.Brand>
+        <Navbar.Brand as={Link} to={routes.home}>{t('titleHeader')}</Navbar.Brand>
         {auth.user ? <Button onClick={auth.logOut}>{t('logout')}</Button> : null}
       </Container>
     </Navbar>

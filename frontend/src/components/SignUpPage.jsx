@@ -53,7 +53,7 @@ const SignUpPage = () => {
           { username: values.username, password: values.password },
         );
         auth.logIn(response.data);
-        navigate('/');
+        navigate(routes.home);
       } catch (err) {
         console.log(err);
         if (err.isAxiosError) {
