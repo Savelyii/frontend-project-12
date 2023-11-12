@@ -6,11 +6,12 @@ import { SocketContext } from './index.js';
 
 import { actions as messagesActions } from '../slices/messagesSlice.js';
 import { actions as channelsActions } from '../slices/channelsSlice';
+import { getCurrentChannelId } from '../selectors.js';
 
 const SocketProvider = ({ socket, children }) => {
   const dispatch = useDispatch();
 
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const currentChannelId = useSelector(getCurrentChannelId);
 
   const addNewMessage = (message) => socket.emit('newMessage', message, (response) => {
     if (response.status !== 'ok') {

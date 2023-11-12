@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import { useSocket } from '../../hooks/index.js';
-import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
+import { getAllChannels } from '../../selectors.js';
 
 const Add = (props) => {
   const { onHide } = props;
@@ -19,7 +19,7 @@ const Add = (props) => {
     inputEl.current.focus();
   }, []);
 
-  const channels = useSelector(channelsSelectors.selectAll);
+  const channels = useSelector(getAllChannels);
 
   const validationSchema = yup.object().shape({
     name: yup

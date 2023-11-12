@@ -10,12 +10,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { PlusSquare } from 'react-bootstrap-icons';
-import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice.js';
+import { getAllChannels, getCurrentChannelId } from '../selectors';
+import { actions as channelsActions } from '../slices/channelsSlice.js';
 
 const Channels = (props) => {
   const { showModal } = props;
-  const channels = useSelector(channelsSelectors.selectAll);
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const channels = useSelector(getAllChannels);
+  const currentChannelId = useSelector(getCurrentChannelId);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();

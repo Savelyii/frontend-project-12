@@ -8,8 +8,7 @@ import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth, useSocket } from '../hooks/index.js';
 
-import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
-import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
+import { getCurrentChannelId, getCurrentChannel, getAllMessages } from '../selectors.js';
 
 const Messages = () => {
   const inputRef = useRef();
@@ -22,12 +21,11 @@ const Messages = () => {
   leoProfanity.add(leoProfanity.getDictionary('en'));
   leoProfanity.add(leoProfanity.getDictionary('ru'));
 
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannel = useSelector((state) => channelsSelectors
-    .selectById(state, currentChannelId));
+  const currentChannelId = useSelector(getCurrentChannelId);
+  const currentChannel = useSelector(getCurrentChannel);
 
-  const messages = useSelector(messagesSelectors.selectAll);
-  const currentMessages = messages.filter((m) => m.channelId === currentChannelId);
+  const currentMessages = useSelector(getAllMessages)
+    .filter((m) => m.channelId === currentChannelId);
 
   useEffect(() => {
     inputRef.current.focus();

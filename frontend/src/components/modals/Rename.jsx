@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import { useSocket } from '../../hooks/index.js';
-import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
+import { getAllChannels } from '../../selectors.js';
 
 const Rename = (props) => {
   const { onHide, id } = props;
@@ -15,7 +15,7 @@ const Rename = (props) => {
   const chat = useSocket();
   const { t } = useTranslation();
 
-  const channels = useSelector(channelsSelectors.selectAll);
+  const channels = useSelector(getAllChannels);
   const currentChannel = channels.find((channel) => channel.id === id);
 
   const validationSchema = yup.object().shape({
